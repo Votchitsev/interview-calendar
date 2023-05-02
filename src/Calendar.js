@@ -1,22 +1,22 @@
 class Calendar {
   constructor() {
-    this.dayMilliseconds = 24*60*60*1000;
+    this.dayMilliseconds = 24 * 60 * 60 * 1000;
   }
 
   getStartWeekDay(weekDay, currentDate) {
     let startWeekDate;
 
     if (weekDay === 0) {
-      startWeekDate = currentDate - (this.dayMilliseconds * 6)
-    };
-  
+      startWeekDate = currentDate - (this.dayMilliseconds * 6);
+    }
+
     if (weekDay === 1) {
       startWeekDate = currentDate;
     }
-  
+
     if (weekDay > 1) {
-      startWeekDate = currentDate - (this.dayMilliseconds * (weekDay - 1))
-    };
+      startWeekDate = currentDate - (this.dayMilliseconds * (weekDay - 1));
+    }
 
     return startWeekDate;
   }
@@ -26,11 +26,10 @@ class Calendar {
     const weekDay = dateInstance.getDay();
 
     const startWeek = this.getStartWeekDay(weekDay, dateInstance);
-    console.log(startWeek);
-    const weekDaysList = []
+    const weekDaysList = [];
 
-    for (let i = 0; i < 7; i++) {
-      let date = new Date(startWeek + (i * this.dayMilliseconds));
+    for (let i = 0; i < 7; i += 1) {
+      const date = new Date(startWeek + (i * this.dayMilliseconds));
       weekDaysList.push(date);
     }
 
@@ -41,10 +40,12 @@ class Calendar {
     if (action === 'next') {
       return date + (this.dayMilliseconds * 7);
     }
-  
+
     if (action === 'prev') {
       return date - (this.dayMilliseconds * 7);
-    } 
+    }
+
+    return null;
   }
 }
 

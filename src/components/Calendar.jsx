@@ -9,14 +9,14 @@ function Calendar() {
   const calendar = new CalendarClass();
 
   const onClick = (action) => {
-    setCurrentDate((prev) => {
-      return calendar.changeWeek(prev, action)
-    });
-  }
+    setCurrentDate(
+      (prev) => calendar.changeWeek(prev, action),
+    );
+  };
 
   useEffect(() => {
     setDays(
-      calendar.getWeekDaysList(currentDate)
+      calendar.getWeekDaysList(currentDate),
     );
 
     setMonth(() => {
@@ -24,16 +24,16 @@ function Calendar() {
       return date.getMonth();
     });
   }, [currentDate]);
-  
+
   return (
     <>
-      { days.map(day => <div>{ day.getDate() }</div>) }
+      { days.map((day) => <div>{ day.getDate() }</div>) }
       <div>{ currentDate }</div>
       <div>{ month }</div>
-      <button onClick={() => onClick('prev')}>Пред.</button>
-      <button onClick={() => onClick('next')}>След.</button>
+      <button onClick={() => onClick('prev')} type="button">Пред.</button>
+      <button onClick={() => onClick('next')} type="button">След.</button>
     </>
-  )
+  );
 }
 
 export default Calendar;
