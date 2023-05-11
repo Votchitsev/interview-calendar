@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/interview-calendar/static/css/main.797418dd.css",
+    "main.js": "/interview-calendar/static/js/main.50467eea.js",
+    "index.html": "/interview-calendar/index.html",
+    "static/media/caret.svg": "/interview-calendar/static/media/caret.ab777da597de0290e2b90ed3e3f48bc2.svg",
+    "main.797418dd.css.map": "/interview-calendar/static/css/main.797418dd.css.map",
+    "main.50467eea.js.map": "/interview-calendar/static/js/main.50467eea.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.797418dd.css",
+    "static/js/main.50467eea.js"
+  ]
+}
