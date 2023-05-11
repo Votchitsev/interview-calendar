@@ -15,7 +15,9 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "eslint .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "browserslist": {
     "production": [
@@ -33,6 +35,8 @@
     "eslint": "^8.39.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-react": "^7.32.2",
+    "gh-pages": "^5.0.0",
     "husky": "^8.0.3"
-  }
+  },
+  "homepage": "http://votchitsev.github.io/interview-calendar"
 }
