@@ -5,40 +5,65 @@ import Day from './Day';
 import Schedule from './Schedule';
 import { CustomDate, getDateFromPrompt } from '../utils';
 import Storage from '../storage';
+import caret from '../svg/caret.svg';
 
 const CalendarElement = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 50vh auto;
-  height: fit-content;
+  margin: 0 auto;
+  height: 100vh;
   width: fit-content;
   max-width: 740px;
+  width: 100%;
 `;
 
 const TitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 2%;
 `;
 
 const Title = styled.h1`
   padding: 10px;
+  font-weight: normal;
 `;
 
 const AddEventButton = styled.button`
-  background-color: green;
-  height: 40px;
+  background: none;
+  border: none;
+  color: red;
+  font-size: 3em;
+`;
+
+const TopBar = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f0f0;
+  border-top: #f5caca 2px solid;
+  border-bottom: #f5caca 2px solid;
 `;
 
 const WeekDaysList = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding-left: 50px;
+  display: grid;
+  grid-template-columns: repeat(7, 14.2%);
+  padding: 20px 0px 20px 50px;
 `;
 
 const WeekDayItem = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+
+  @media (max-width: 500px) {
+    width: 50px;
+  }
+`;
+
+const WeekDayName = styled.div`
+  font-size: 0.8em;
+  text-align: center;
+  padding: 4px;
 `;
 
 const MonthBar = styled.div`
@@ -46,32 +71,48 @@ const MonthBar = styled.div`
   width: 100%;
   align-self: center;
   justify-content: space-between;
-  padding-left: 50px;
+  padding-left: 5%;
+  width: 95%;
+`;
+
+const MonthYearContainer = styled.div`
+  display: flex;
+  width: 50%;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 1.5em;
 `;
 
 const MonthBtn = styled.button`
   background: none;
-  display: inline-block;
-  border: 10px solid transparent;
+  border: none;
+  background-image: url(${caret});
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 50px;
+  height: 50px;
   cursor: pointer;
 `;
 
 const MonthBtnLeft = styled(MonthBtn)`
-  border-right: 10px solid orange;
 `;
 
 const MonthBtnRight = styled(MonthBtn)`
-  border-left: 10px solid orange;
+  transform: rotate(180deg);
 `;
 
 const ButtonsContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  height: 10vh;
+  background-color: #f5f0f0;
+  padding: 0 6%;
 `;
 
 const Button = styled.button`
 background: none;
 border: none;
+font-size: 1.5em;
 color: red;
 cursor: pointer
 `;
@@ -134,26 +175,31 @@ function Calendar() {
     <CalendarElement>
       <TitleContainer>
         <Title>Interview Calendar</Title>
-        <AddEventButton onClick={onAddEvent}>Add</AddEventButton>
+        <AddEventButton onClick={onAddEvent}>+</AddEventButton>
       </TitleContainer>
-      <WeekDaysList>
-        { days.map(
-          (day) => (
-            <WeekDayItem key={day.getDate()}>
-              <div>{ weekDayNames[day.getDay()] }</div>
-              <Day
-                day={day}
-              />
-            </WeekDayItem>
-          ),
-        ) }
-      </WeekDaysList>
-      <MonthBar>
-        <MonthBtnLeft onClick={() => onClick('prev')} type="button" />
-        <div>{ MonthsList[month] }</div>
-        <div>{ year }</div>
-        <MonthBtnRight onClick={() => onClick('next')} type="button" />
-      </MonthBar>
+      <TopBar>
+        <WeekDaysList>
+          { days.map(
+            (day) => (
+              <WeekDayItem key={day.getDate()}>
+                <WeekDayName>{ weekDayNames[day.getDay()] }</WeekDayName>
+                <Day
+                  day={day}
+                />
+              </WeekDayItem>
+            ),
+          ) }
+        </WeekDaysList>
+        <MonthBar>
+          <MonthBtnLeft onClick={() => onClick('prev')} type="button" />
+          <MonthYearContainer>
+            { MonthsList[month] }
+            {' '}
+            { year }
+          </MonthYearContainer>
+          <MonthBtnRight onClick={() => onClick('next')} type="button" />
+        </MonthBar>
+      </TopBar>
       <Schedule days={days} events={events} setActiveEvent={setActiveEvent} />
       <ButtonsContainer>
         <Button onClick={() => setCurrentDate(Date.now())}>Today</Button>

@@ -2,7 +2,13 @@ import { CustomDate } from './utils';
 
 export default class Storage {
   static get(key) {
-    return JSON.parse(localStorage.getItem(key)).map(
+    const storageData = JSON.parse(localStorage.getItem(key));
+
+    if (!storageData) {
+      return [];
+    }
+
+    return storageData.map(
       (item) => {
         const date = new Date(item);
         return new CustomDate(date);

@@ -18,34 +18,48 @@ const TimeColumn = styled.div`
 const HourCell = styled.div`
   display: flex;
   align-items: center;
-  height: 40px;
+  height: 47px;
   margin: 1px;
+  position: relative;
+  top: -24px;
+
+  &:nth-child(1) {
+    visibility: hidden;
+  }
 `;
 
 const Events = styled.div`
   display: flex;
   padding-left: 10px;
   height: fit-content;
+  width: 100%;
 `;
 
 const DayEvents = styled.div`
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
 `;
 
-const EventCell = styled.button`
-  width: 40px;
+const EventCell = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 40px;
-  border: 1px solid grey;
-  margin: 1px; 
+  border-right: 1px solid #f5caca;
+  border-bottom: 1px solid #f5caca;
+  flex-grow: 1;
+  padding: 4px;
+`;
+
+const Event = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: aqua;
 `;
 
 function Schedule({ days, events, setActiveEvent }) {
   const hours = getHourList();
-
-  const activeElementStyle = {
-    backgroundColor: 'grey',
-  };
 
   const onEventClickHandle = (day, hour) => {
     const eventObject = new CustomDate(day, hour);
@@ -82,9 +96,10 @@ function Schedule({ days, events, setActiveEvent }) {
               (hour) => (
                 <EventCell
                   key={hour}
-                  style={checkActiveElement(day, hour) ? activeElementStyle : null}
                   onClick={() => onEventClickHandle(day, hour)}
-                />
+                >
+                  { checkActiveElement(day, hour) ? <Event /> : null }
+                </EventCell>
               ),
             ) }
           </DayEvents>
