@@ -81,9 +81,18 @@ function Schedule({ days, events, setEvents }) {
     setEvents((prev) => [...prev, { day, hour }]);
   };
 
-  const checkActiveElement = (day, hour) => events.find(
-    (event) => event.day === day && event.hour === hour,
-  );
+  const checkActiveElement = (day, hour) => {
+    const eventObject = {
+      day: day.getDate(),
+      month: day.getMonth(),
+      year: day.getFullYear(),
+      hour,
+    };
+
+    return events.find(
+      (event) => JSON.stringify(event) === JSON.stringify(eventObject),
+    );
+  };
 
   return (
     <Container>

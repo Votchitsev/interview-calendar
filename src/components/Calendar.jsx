@@ -82,6 +82,33 @@ function Calendar() {
     );
   };
 
+  const onAddEvent = () => {
+    const eventTime = prompt('Enter event time:\nYYYY:MM:DD HH:mm:ss');
+
+    if (!eventTime) {
+      return;
+    }
+
+    const date = eventTime.match(/^\d{4}:\d{2}:\d{2}/);
+    const time = eventTime.match(/\d{2}:\d{2}:\d{2}$/);
+
+    if (!date || !time) {
+      alert('Please enter time with the pattern:\nYYYY:MM:DD HH:mm:ss');
+      return;
+    }
+
+    const parsedDate = new Date(`${date[0].replace(/:/g, '-')}T${time[0]}`);
+
+    const dateObject = {
+      day: parsedDate.getDate(),
+      month: parsedDate.getMonth(),
+      year: parsedDate.getFullYear(),
+      hour: parsedDate.getHours(),
+    };
+
+    setEvents((prev) => [...prev, dateObject]);
+  };
+
   const onSetActiveDay = (day) => {
     setActiveDay(day);
   };
@@ -106,7 +133,7 @@ function Calendar() {
     <CalendarElement>
       <TitleContainer>
         <Title>Interview Calendar</Title>
-        <AddEventButton>Add</AddEventButton>
+        <AddEventButton onClick={onAddEvent}>Add</AddEventButton>
       </TitleContainer>
       <WeekDaysList>
         { days.map(
