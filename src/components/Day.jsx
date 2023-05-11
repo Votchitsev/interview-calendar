@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
-import CustomDateObject from '../utils';
+import { CustomDate } from '../utils';
 
 function Day({ day }) {
   const activeStyle = {
@@ -10,8 +10,8 @@ function Day({ day }) {
   const [active, setActive] = useState(false);
 
   useEffect(() => {
-    const date = new CustomDateObject(day);
-    const today = new CustomDateObject(new Date());
+    const date = new CustomDate(day);
+    const today = new CustomDate(new Date());
 
     if (date.isEqual(today)) {
       setActive(true);

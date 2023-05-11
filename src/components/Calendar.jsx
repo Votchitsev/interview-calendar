@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import CalendarClass from '../Calendar';
 import Day from './Day';
 import Schedule from './Schedule';
+import { CustomDate, getDateFromPrompt } from '../utils';
+import Storage from '../storage';
 
 const CalendarElement = styled.div`
   display: flex;
@@ -83,7 +85,7 @@ function Calendar() {
   const [days, setDays] = useState([]);
   const [month, setMonth] = useState();
   const [year, setYear] = useState();
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState(Storage.get('events') || []);
   const [activeEvent, setActiveEvent] = useState();
 
   const calendar = new CalendarClass();
@@ -95,45 +97,22 @@ function Calendar() {
   };
 
   const onAddEvent = () => {
-    const eventTime = prompt('Enter event time:\nYYYY:MM:DD HH:mm:ss');
-
-    if (!eventTime) {
-      return;
-    }
-
-    const date = eventTime.match(/^\d{4}:\d{2}:\d{2}/);
-    const time = eventTime.match(/\d{2}:\d{2}:\d{2}$/);
-
-    if (!date || !time) {
-      alert('Please enter time with the pattern:\nYYYY:MM:DD HH:mm:ss');
-      return;
-    }
-
-    const formattedDateString = `${date[0].replace(/:/g, '-')}T${time[0]}`;
-
-    if (!Date.parse(formattedDateString)) {
-      alert('Invalid Date');
-    }
-
-    const parsedDate = new Date(formattedDateString);
-
-    const dateObject = {
-      day: parsedDate.getDate(),
-      month: parsedDate.getMonth(),
-      year: parsedDate.getFullYear(),
-      hour: parsedDate.getHours(),
-    };
-
+    const parsedDate = getDateFromPrompt();
+    const dateObject = new CustomDate(parsedDate);
     setEvents((prev) => [...prev, dateObject]);
   };
 
   const onDeleteEvent = () => {
     setEvents(
-      (prev) => prev.filter((ev) => JSON.stringify(ev) !== JSON.stringify(activeEvent)),
+      (prev) => prev.filter((ev) => !ev.isEqual(activeEvent)),
     );
 
     setActiveEvent();
   };
+
+  useEffect(() => {
+    Storage.set('events', events);
+  }, [events]);
 
   useEffect(() => {
     setDays(

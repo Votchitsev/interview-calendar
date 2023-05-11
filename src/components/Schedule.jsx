@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
+import { CustomDate, getHourList } from '../utils';
 
 const Container = styled.div`
   display: flex;
@@ -39,23 +40,6 @@ const EventCell = styled.button`
   margin: 1px; 
 `;
 
-function getHourList() {
-  const hourList = [];
-
-  function getHour(hour) {
-    if (hour < 24) {
-      hourList.push(hour);
-      return getHour(hour + 1);
-    }
-
-    return true;
-  }
-
-  getHour(0);
-
-  return hourList;
-}
-
 function Schedule({ days, events, setActiveEvent }) {
   const hours = getHourList();
 
@@ -64,15 +48,10 @@ function Schedule({ days, events, setActiveEvent }) {
   };
 
   const onEventClickHandle = (day, hour) => {
-    const eventObject = {
-      day: day.getDate(),
-      month: day.getMonth(),
-      year: day.getFullYear(),
-      hour,
-    };
+    const eventObject = new CustomDate(day, hour);
 
     const event = events.find(
-      (ev) => JSON.stringify(ev) === JSON.stringify(eventObject),
+      (ev) => ev.isEqual(eventObject),
     );
 
     if (event) {
@@ -84,22 +63,17 @@ function Schedule({ days, events, setActiveEvent }) {
   };
 
   const checkActiveElement = (day, hour) => {
-    const eventObject = {
-      day: day.getDate(),
-      month: day.getMonth(),
-      year: day.getFullYear(),
-      hour,
-    };
+    const eventObject = new CustomDate(day, hour);
 
     return events.find(
-      (event) => JSON.stringify(event) === JSON.stringify(eventObject),
+      (event) => event.isEqual(eventObject),
     );
   };
 
   return (
     <Container>
       <TimeColumn>
-        { hours.map((hour) => <HourCell>{`${hour / 10 >= 1 ? hour : `0${hour}`}:00`}</HourCell>)}
+        { hours.map((hour) => <HourCell key={hour}>{`${hour / 10 >= 1 ? hour : `0${hour}`}:00`}</HourCell>)}
       </TimeColumn>
       <Events>
         { days.map((day) => (
