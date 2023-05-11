@@ -75,3 +75,7 @@ export function getDateFromPrompt() {
 
   return parsedDate;
 }
+
+export const weekDayNames = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+
+export const MonthsList = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];

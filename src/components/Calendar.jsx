@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import CalendarClass from '../Calendar';
 import Day from './Day';
 import Schedule from './Schedule';
-import { CustomDate, getDateFromPrompt } from '../utils';
+import {
+  CustomDate, getDateFromPrompt, weekDayNames, MonthsList,
+} from '../utils';
 import Storage from '../storage';
 import caret from '../svg/caret.svg';
 
@@ -117,10 +119,6 @@ font-size: 1.5em;
 color: red;
 cursor: pointer
 `;
-
-const weekDayNames = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-
-const MonthsList = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 function Calendar() {
   const [currentDate, setCurrentDate] = useState(Date.now());
