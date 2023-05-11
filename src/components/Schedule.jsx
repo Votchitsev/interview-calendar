@@ -56,7 +56,7 @@ function getHourList() {
   return hourList;
 }
 
-function Schedule({ days, events, setEvents }) {
+function Schedule({ days, events, setActiveEvent }) {
   const hours = getHourList();
 
   const activeElementStyle = {
@@ -64,21 +64,23 @@ function Schedule({ days, events, setEvents }) {
   };
 
   const onEventClickHandle = (day, hour) => {
-    const newEvent = { day, hour };
+    const eventObject = {
+      day: day.getDate(),
+      month: day.getMonth(),
+      year: day.getFullYear(),
+      hour,
+    };
 
-    const prevEvent = events.find(
-      (event) => event.day === newEvent.day && event.hour === newEvent.hour,
+    const event = events.find(
+      (ev) => JSON.stringify(ev) === JSON.stringify(eventObject),
     );
 
-    if (prevEvent) {
-      setEvents(
-        (prev) => prev.filter((ev) => JSON.stringify(ev) !== JSON.stringify(prevEvent)),
-      );
-
+    if (event) {
+      setActiveEvent(eventObject);
       return;
     }
 
-    setEvents((prev) => [...prev, { day, hour }]);
+    setActiveEvent();
   };
 
   const checkActiveElement = (day, hour) => {

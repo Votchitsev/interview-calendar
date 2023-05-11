@@ -62,6 +62,18 @@ const MonthBtnRight = styled(MonthBtn)`
   border-left: 10px solid orange;
 `;
 
+const ButtonsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Button = styled.button`
+background: none;
+border: none;
+color: red;
+cursor: pointer
+`;
+
 const weekDayNames = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
 const MonthsList = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -73,6 +85,7 @@ function Calendar() {
   const [year, setYear] = useState();
   const [activeDay, setActiveDay] = useState();
   const [events, setEvents] = useState([]);
+  const [activeEvent, setActiveEvent] = useState();
 
   const calendar = new CalendarClass();
 
@@ -97,7 +110,13 @@ function Calendar() {
       return;
     }
 
-    const parsedDate = new Date(`${date[0].replace(/:/g, '-')}T${time[0]}`);
+    const formattedDateString = `${date[0].replace(/:/g, '-')}T${time[0]}`;
+
+    if (!Date.parse(formattedDateString)) {
+      alert('Invalid Date');
+    }
+
+    const parsedDate = new Date(formattedDateString);
 
     const dateObject = {
       day: parsedDate.getDate(),
@@ -107,6 +126,14 @@ function Calendar() {
     };
 
     setEvents((prev) => [...prev, dateObject]);
+  };
+
+  const onDeleteEvent = () => {
+    setEvents(
+      (prev) => prev.filter((ev) => JSON.stringify(ev) !== JSON.stringify(activeEvent)),
+    );
+
+    setActiveEvent();
   };
 
   const onSetActiveDay = (day) => {
@@ -155,7 +182,11 @@ function Calendar() {
         <div>{ year }</div>
         <MonthBtnRight onClick={() => onClick('prev')} type="button" />
       </MonthBar>
-      <Schedule days={days} events={events} setEvents={setEvents} />
+      <Schedule days={days} events={events} setActiveEvent={setActiveEvent} />
+      <ButtonsContainer>
+        <Button>Today</Button>
+        { activeEvent ? <Button onClick={onDeleteEvent}>Delete</Button> : null }
+      </ButtonsContainer>
     </CalendarElement>
   );
 }
