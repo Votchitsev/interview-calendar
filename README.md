@@ -28,3 +28,5 @@ https://blog.heroku.com/deploying-react-with-zero-configuration
 Вместо Heroku, можно использовать любой другой хостинг.
 
 Подробное задание: https://drive.google.com/file/d/1R_2q7mTiRfCZcMv-QcuntqYxDC7HtUwh/view?usp=sharing
+
+## Решение выложено на GitHub pages - https://votchitsev.github.io/interview-calendar/
