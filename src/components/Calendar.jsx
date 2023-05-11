@@ -13,8 +13,19 @@ const CalendarElement = styled.div`
   max-width: 740px;
 `;
 
+const TitleContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 const Title = styled.h1`
   padding: 10px;
+`;
+
+const AddEventButton = styled.button`
+  background-color: green;
+  height: 40px;
 `;
 
 const WeekDaysList = styled.div`
@@ -93,7 +104,10 @@ function Calendar() {
 
   return (
     <CalendarElement>
-      <Title>Interview Calendar</Title>
+      <TitleContainer>
+        <Title>Interview Calendar</Title>
+        <AddEventButton>Add</AddEventButton>
+      </TitleContainer>
       <WeekDaysList>
         { days.map(
           (day) => (
