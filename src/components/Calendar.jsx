@@ -83,7 +83,6 @@ function Calendar() {
   const [days, setDays] = useState([]);
   const [month, setMonth] = useState();
   const [year, setYear] = useState();
-  const [activeDay, setActiveDay] = useState();
   const [events, setEvents] = useState([]);
   const [activeEvent, setActiveEvent] = useState();
 
@@ -136,10 +135,6 @@ function Calendar() {
     setActiveEvent();
   };
 
-  const onSetActiveDay = (day) => {
-    setActiveDay(day);
-  };
-
   useEffect(() => {
     setDays(
       calendar.getWeekDaysList(currentDate),
@@ -169,8 +164,6 @@ function Calendar() {
               <div>{ weekDayNames[day.getDay()] }</div>
               <Day
                 day={day}
-                onSetActiveDay={onSetActiveDay}
-                active={day === activeDay}
               />
             </WeekDayItem>
           ),
@@ -180,11 +173,11 @@ function Calendar() {
         <MonthBtnLeft onClick={() => onClick('prev')} type="button" />
         <div>{ MonthsList[month] }</div>
         <div>{ year }</div>
-        <MonthBtnRight onClick={() => onClick('prev')} type="button" />
+        <MonthBtnRight onClick={() => onClick('next')} type="button" />
       </MonthBar>
       <Schedule days={days} events={events} setActiveEvent={setActiveEvent} />
       <ButtonsContainer>
-        <Button>Today</Button>
+        <Button onClick={() => setCurrentDate(Date.now())}>Today</Button>
         { activeEvent ? <Button onClick={onDeleteEvent}>Delete</Button> : null }
       </ButtonsContainer>
     </CalendarElement>
