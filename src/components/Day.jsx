@@ -1,6 +1,6 @@
-/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { CustomDate } from '../utils';
 
 const DayItem = styled.div`
@@ -42,5 +42,9 @@ function Day({ day }) {
     </DayItem>
   );
 }
+
+Day.propTypes = {
+  day: PropTypes.instanceOf(Date).isRequired,
+};
 
 export default Day;

@@ -34,6 +34,7 @@ const AddEventButton = styled.button`
   border: none;
   color: red;
   font-size: 3em;
+  cursor: pointer;
 `;
 
 const TopBar = styled.div`
@@ -139,6 +140,11 @@ function Calendar() {
 
   const onAddEvent = () => {
     const parsedDate = getDateFromPrompt();
+
+    if (!parsedDate) {
+      return;
+    }
+
     const dateObject = new CustomDate(parsedDate);
     setEvents((prev) => [...prev, dateObject]);
   };

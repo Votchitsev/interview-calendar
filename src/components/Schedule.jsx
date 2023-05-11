@@ -1,6 +1,6 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { CustomDate, getHourList } from '../utils';
 
 const Container = styled.div`
@@ -108,5 +108,11 @@ function Schedule({ days, events, setActiveEvent }) {
     </Container>
   );
 }
+
+Schedule.propTypes = {
+  days: PropTypes.arrayOf(Date).isRequired,
+  events: PropTypes.arrayOf(PropTypes.instanceOf(CustomDate)).isRequired,
+  setActiveEvent: PropTypes.func.isRequired,
+};
 
 export default Schedule;
